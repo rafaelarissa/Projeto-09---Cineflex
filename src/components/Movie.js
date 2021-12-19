@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-export default function Movie({ }) {
+export default function Movie() {
   const [selectedMovie, setSelectedMovie] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,9 @@ export default function Movie({ }) {
           <h2>Selecione o Filme</h2>
         </div>
         <div className="containerBanners">
-          {selectedMovie.map(movie => { return (<div className="banner" ><img src={movie.posterURL} /> </div>) })}
+          {selectedMovie.map(movie => {
+            return (<div className="banner" ><Link to={`/sessoes/${movie.id}`}><img src={movie.posterURL} alt={movie.title} /></Link> </div>)
+          })}
         </div>
       </Main>
     </>
