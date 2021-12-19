@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Movie from "./components/Movie";
 import Session from "./components/Session";
 import Seat from "./components/Seat";
@@ -11,11 +11,11 @@ export default function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Movie />}></Route>
-                <Route path="/sessoes/:idFilme" element={<Movie />}></Route>
-                <Route path="/assentos/:idSessao" element={<Movie />}></Route>
+                <Route path="/sessoes/:idFilme" element={<Session />}></Route>
+                <Route path="/assentos/:idSessao" element={<Seat />}></Route>
                 <Route path="/" element={<Movie />}></Route>
                 <Route path="/" element={<Movie />}></Route>
             </Routes>
         </BrowserRouter>
-    )
+    );
 }
