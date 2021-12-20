@@ -41,7 +41,7 @@ export default function Session() {
                   </span>
                   <div className="sessionTime">
                     {session.showtimes.map(showtime =>
-                      <button><Link to={`/sessoes/${showtime.id}`}>{showtime.name}</Link></button>)
+                      <button><Link to={`/assentos/${showtime.id}`}>{showtime.name}</Link></button>)
                     }
                   </div>
                 </Sessions>)
@@ -67,7 +67,6 @@ const Header = styled.header`
     h1{
         color: #E8833A;
         font-size: 34px;
-        
     }
 `;
 

@@ -42,7 +42,6 @@ const Header = styled.header`
   h1{
       color: #E8833A;
       font-size: 34px;
-      
   }
 `;
 
