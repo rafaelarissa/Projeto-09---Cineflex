@@ -9,12 +9,13 @@ export default function Seat() {
   const { idSessao } = useParams();
   const [seat, setSeat] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const enabled = true;
+  const [isSelected, setIsSelected] = useState([]);
 
   useEffect(() => {
     const promessa = axios.get(`https://mock-api.driven.com.br/api/v4/cineflex/showtimes/${idSessao}/seats`);
     promessa.then(resposta => {
       setSeat(resposta.data);
+      resposta.data.seats.map(() => setIsSelected(...isSelected, false));
       setIsLoading(false);
     });
   }, []);
@@ -34,10 +35,10 @@ export default function Seat() {
             <Container>
               <h2>Selecione o(s) assento(s)</h2>
             </Container>
-            <ContainerSeats>
-              {seat.seats.map(seat =>
-                <Seats>
-                  <span>
+            <ContainerSeats >
+              {seat.seats.map((seat, index) =>
+                <Seats selected={isSelected[index]}>
+                  <span onClick={() => { isSelected[index] = true; setIsSelected(...isSelected); alert('funciona') }}>
                     {seat.name}
                   </span>
                 </Seats>)}
@@ -116,7 +117,7 @@ const ContainerSeats = styled.div`
 `;
 
 const Seats = styled.div`
-  background-color: #C3CFD9;
+  background-color: ${props => props.selected ? "#8DD7CF" : "#C3CFD9"};
 
   font-size: 11px;
   color: #000000;
@@ -162,7 +163,6 @@ const CustomerInformation = styled.div`
   font-size: 18px;
   color: #293845;
 
-
   input{
     width: 327px;
     height: 51px;
@@ -174,8 +174,7 @@ const CustomerInformation = styled.div`
     color: #AFAFAF;
     font-size: 18px;
     font-style: italic;
-    margin-left: 18px;
-
+    padding-left: 18px;
   }
   
 `;
