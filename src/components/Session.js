@@ -1,41 +1,58 @@
-import { Link } from "react-router-dom";
 import axios from 'axios';
+import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
 import styled from 'styled-components';
+import Footer from "./Footer";
 
 export default function Session() {
   const { idFilme } = useParams();
-  const [sessions, setSession] = useState(null);
+  const [sessions, setSessions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const promessa = axios.get(`https://mock-api.driven.com.br/api/v4/cineflex/movies/${idFilme}/showtimes`);
-    promessa.then(resposta => { setSession(resposta.data); });
+    promessa.then(resposta => {
+      setSessions(resposta.data);
+      setIsLoading(false);
+    });
   }, []);
 
+  console.log(sessions);
   return (
     <>
-      <Header>
-        <h1>CINEFLEX</h1>
-      </Header>
-      <Main>
-        <div className="containerH1">
-          <h2>Selecione o horário</h2>
-        </div>
-        <div className="containerSessions">
-          {sessions.days.map(session => {
-            return (
-              <div className="session" >
-                <span className="sessionDate">
-                  {session.weekday}
-                  <Link to={`/sessoes/${session.days.id}`}>
-                    {session.showtimes.map(showtime => { return (<span className="sessionTime">{showtime.name}</span>) })}
-                  </Link>
-                </span>
-              </div>)
-          })}
-        </div>
-      </Main>
+      {isLoading ?
+        <>
+          <div>
+            <p>Loading</p>
+          </div >
+        </>
+        :
+        <>
+          <Header>
+            <h1>CINEFLEX</h1>
+          </Header>
+          <Main>
+            <Container>
+              <h2>Selecione o horário</h2>
+            </Container>
+            <ContainerSessions>
+              {sessions.days.map(session =>
+                <Sessions>
+                  <span className="sessionDate">
+                    {session.weekday} - {session.date}
+                  </span>
+                  <div className="sessionTime">
+                    {session.showtimes.map(showtime =>
+                      <Link to={`/sessoes/${showtime.id}`}><button>{showtime.name}</button></Link>)
+                    }
+                  </div>
+                </Sessions>)
+              }
+            </ContainerSessions>
+          </Main>
+          <Footer title={sessions.title} posterURL={sessions.posterURL} />
+        </>
+      }
     </>
   )
 }
@@ -57,34 +74,53 @@ const Header = styled.header`
 `;
 
 const Main = styled.main`
+    background-color: #ffffff;
+
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
+`;
 
-    .containerH1{
-      display: flex;
-      align-items: center;
-      justify-content: center;
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      font-size: 24px;
-      text-align: center;
-      
-      width: 374px;
-      height: 110px;
-    }
-    
-    .containerBanners{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
+  font-size: 24px;
+  text-align: center;
+  
+  width: 374px;
+  height: 110px;
+`;
 
-      .banner img{
-        width: 145px;
-        height: 209px;
-        padding: 8px;
+const ContainerSessions = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 23px;
+`;
 
-        box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
-        border-radius: 3px;
-      }
-    }
+const Sessions = styled.div`
+  margin-left: 23px;
+  
+  .sessionDate{
+    font-size: 20px;
+    color: #293845;
+  }
+  .sessionTime{
+    margin-top: 32px;
+  }
+  .sessionTime button{
+    background-color:  #E8833A;
+    border-radius: 3px;
+    border: none;
+
+    width: 82px;
+    height: 43px;
+    margin-right: 8px;
+
+    color: #ffffff;
+    font-size: 18px;
+  }
+
 `;

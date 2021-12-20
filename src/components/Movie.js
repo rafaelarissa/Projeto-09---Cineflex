@@ -17,9 +17,9 @@ export default function Movie() {
         <h1>CINEFLEX</h1>
       </Header>
       <Main>
-        <div className="containerH1">
-          <h2>Selecione o Filme</h2>
-        </div>
+        <Container>
+          <h2>Selecione o filme</h2>
+        </Container>
         <div className="containerBanners">
           {selectedMovie.map(movie => {
             return (<div className="banner" ><Link to={`/sessoes/${movie.id}`}><img src={movie.posterURL} alt={movie.title} /></Link> </div>)
@@ -31,36 +31,25 @@ export default function Movie() {
 }
 
 const Header = styled.header`
-    background-color: #C3CFD9;
-    width: 100%;
-    height: 67px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: #C3CFD9;
+  width: 100%;
+  height: 67px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    h1{
-        color: #E8833A;
-        font-size: 34px;
-        
-    }
+  h1{
+      color: #E8833A;
+      font-size: 34px;
+      
+  }
 `;
 
 const Main = styled.main`
+    background-color: #ffffff;
     display: flex;
     flex-wrap: wrap;
-
-    .containerH1{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 24px;
-      text-align: center;
-      
-      width: 374px;
-      height: 110px;
-    }
     
     .containerBanners{
       display: flex;
@@ -77,4 +66,16 @@ const Main = styled.main`
         border-radius: 3px;
       }
     }
+`;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  text-align: center;
+  
+  width: 374px;
+  height: 110px;
 `;

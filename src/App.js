@@ -4,6 +4,8 @@ import Session from "./components/Session";
 import Seat from "./components/Seat";
 import Footer from "./components/Footer";
 import Success from "./components/Success";
+import "./css/reset.css";
+import "./css/style.css";
 
 export default function App() {
     return (
