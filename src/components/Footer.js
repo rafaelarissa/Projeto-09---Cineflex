@@ -16,7 +16,7 @@ const ContainerFooter = styled.div`
     height: 117px;
     display: flex;
     align-items: center;
-    margin-left: 10px;
+    border: 1px solid #9EADBA;
     gap: 14px;
     font-size: 26px;
     color: #293845;
@@ -28,5 +28,6 @@ const ContainerFooter = styled.div`
         background-color: #ffffff;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 2px;
+        margin-left: 10px;
     }
 `;

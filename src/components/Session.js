@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Footer from "./Footer";
+import Loading from './Loading';
 
 export default function Session() {
   const { idFilme } = useParams();
@@ -17,14 +18,11 @@ export default function Session() {
     });
   }, []);
 
-  console.log(sessions);
   return (
     <>
       {isLoading ?
         <>
-          <div>
-            <p>Loading</p>
-          </div >
+          <Loading />
         </>
         :
         <>
@@ -43,7 +41,7 @@ export default function Session() {
                   </span>
                   <div className="sessionTime">
                     {session.showtimes.map(showtime =>
-                      <Link to={`/sessoes/${showtime.id}`}><button>{showtime.name}</button></Link>)
+                      <button><Link to={`/sessoes/${showtime.id}`}>{showtime.name}</Link></button>)
                     }
                   </div>
                 </Sessions>)
@@ -120,7 +118,7 @@ const Sessions = styled.div`
     margin-right: 8px;
 
     color: #ffffff;
-    font-size: 18px;
+    font-size: 18px;   
   }
-
 `;
+
