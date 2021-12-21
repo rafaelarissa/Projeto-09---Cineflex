@@ -4,21 +4,23 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Footer from "./Footer";
 import Loading from './Loading';
+import Seats from './Seats';
 
 export default function Seat() {
   const { idSessao } = useParams();
   const [seat, setSeat] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSelected, setIsSelected] = useState([]);
+  const [chosenSeat, setChosenSeat] = useState([]);
 
   useEffect(() => {
     const promessa = axios.get(`https://mock-api.driven.com.br/api/v4/cineflex/showtimes/${idSessao}/seats`);
     promessa.then(resposta => {
       setSeat(resposta.data);
-      resposta.data.seats.map(() => setIsSelected(...isSelected, false));
       setIsLoading(false);
     });
   }, []);
+
+  console.log(seat);
 
   return (
     <>
@@ -35,13 +37,16 @@ export default function Seat() {
             <Container>
               <h2>Selecione o(s) assento(s)</h2>
             </Container>
-            <ContainerSeats >
-              {seat.seats.map((seat, index) =>
-                <Seats selected={isSelected[index]}>
-                  <span onClick={() => { isSelected[index] = true; setIsSelected(...isSelected); alert('funciona') }}>
-                    {seat.name}
-                  </span>
-                </Seats>)}
+            <ContainerSeats>
+              {seat.seats.map(seat =>
+                <Seats
+                  id={seat.id}
+                  name={seat.name}
+                  chosenSeat={chosenSeat}
+                  setChosenSeat={setChosenSeat}
+                  available={seat.isAvailable}
+                />
+              )}
             </ContainerSeats>
             <SubtitleSeats>
               <Div color="#8DD7CF" borderColor="#1AAE9E">
@@ -114,19 +119,6 @@ const ContainerSeats = styled.div`
   justify-content: center;
   row-gap: 18px;
   column-gap: 10px;
-`;
-
-const Seats = styled.div`
-  background-color: ${props => props.selected ? "#8DD7CF" : "#C3CFD9"};
-
-  font-size: 11px;
-  color: #000000;
-  text-align: center;
-  
-  padding-top: 9px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%
 `;
 
 const SubtitleSeats = styled.div`
