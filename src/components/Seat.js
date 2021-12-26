@@ -64,7 +64,7 @@ export default function Seat() {
             </SubtitleSeats>
             <CustomerInformation>
               <span className="customerName">Nome do comprador:</span><input type="text" placeholder="Digite seu nome.."></input>
-              <span className="customerCPF">CPF do comprador:</span><input type="text" placeholder="Digite seu CPF..."></input>
+              <span className="customerCPF">CPF do comprador:</span><input type="number" placeholder="Digite seu CPF..."></input>
             </CustomerInformation>
             <Button>Reservar assento(s)</Button>
           </Main>
@@ -160,13 +160,13 @@ const CustomerInformation = styled.div`
     height: 51px;
     border: 1px solid #D5D5D5;
     border-radius: 3px;
-
+    font-size: 18px;
+    padding-left: 18px;
   }
   input::placeholder{
     color: #AFAFAF;
     font-size: 18px;
     font-style: italic;
-    padding-left: 18px;
   }
   
 `;
